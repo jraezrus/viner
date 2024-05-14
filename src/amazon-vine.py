@@ -115,7 +115,7 @@ def open_product_page(br, link, url) -> bool:
         print('New item:', link)
         # Display how much tax it costs
         tags = soup.find_all('p', text=re.compile(
-            'Estimated tax value : \$[0-9\.]*'))
+            'Valor estimado de impuestos: \$[0-9\.]*'))
         if tags:
             tag = tags[0].contents[0]
             m = re.search('\$([0-9\.]*)', tag)

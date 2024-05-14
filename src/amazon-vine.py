@@ -20,9 +20,9 @@ import getpass
 from optparse import OptionParser
 
 
-INITIAL_PAGE: Final = 'https://www.amazon.com/gp/vine/'
-QUEUE_URL: Final = 'https://www.amazon.com/gp/vine/newsletter?ie=UTF8&tab=US_Default'
-VFA_URL: Final = 'https://www.amazon.com/gp/vine/newsletter?ie=UTF8&tab=US_LastChance'
+INITIAL_PAGE: Final = 'https://www.amazon.es/vine/'
+QUEUE_URL: Final = 'https://www.amazon.es/vine/vine-items?queue=encore'
+VFA_URL: Final = 'https://www.amazon.es/vine/vine-items?queue=potluck'
 USER_AGENT: Final[str] = fake_useragent.UserAgent().ff
 
 
@@ -45,7 +45,7 @@ def create_browser() -> mechanize.Browser:
         html = browser.open(INITIAL_PAGE).read()
 
         # Are we already logged in?
-        if b'The Exclusive Club of Influential Amazon Voices.' in html:
+        if b'Mostrando' in html:
             return browser
 
         print('Could not log in with a cookie')
@@ -136,7 +136,7 @@ parser.add_option("-w", dest="wait",
                   type="int", default=10)
 parser.add_option('--browser', dest='browser',
                   help='Which browser to use ("firefox" or "chrome") from which to load the session cookies (default is "%default")',
-                  type="string", default='firefox')
+                  type="string", default='chrome')
 
 (OPTIONS, _args) = parser.parse_args()
 
@@ -159,7 +159,7 @@ while True:
     if your_queue_list2:
         for link in your_queue_list2.copy():
             if link not in your_queue_list:
-                if not open_product_page(BROWSER, link, 'https://www.amazon.com/gp/vine/product?ie=UTF8&asin=%s&tab=US_Default'):
+                if not open_product_page(BROWSER, link, 'https://www.amazon.es/vine/product?ie=UTF8&asin=%s&tab=US_Default'):
                     # If the item can't be opened, it might be because the web site
                     # isn't ready to show it to me yet.  Remove it from our list so
                     # that it appears again as a new item, and we'll try again.
@@ -174,7 +174,7 @@ while True:
     if vine_for_all_list2:
         for link in vine_for_all_list2.copy():
             if link not in vine_for_all_list:
-                if not open_product_page(BROWSER, link, 'https://www.amazon.com/gp/vine/product?ie=UTF8&asin=%s&tab=US_LastChance'):
+                if not open_product_page(BROWSER, link, 'https://www.amazon.es/vine/product?ie=UTF8&asin=%s&tab=US_LastChance'):
                     # If the item can't be opened, it might be because the web site
                     # isn't ready to show it to me yet.  Remove it from our list so
                     # that it appears again as a new item, and we'll try again.

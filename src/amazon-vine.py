@@ -118,7 +118,7 @@ def open_product_page(br, link, url) -> bool:
             r'Valor estimado de impuestos: \$[0-9\.]*'))
         if tags:
             tag = tags[0].contents[0]
-            m = re.search('\$([0-9\.]*)', tag)
+            m = re.search(r'\$([0-9\.]*)', tag)
             if m:
                 cost = float(m.group(1))
                 print('Tax cost: $%.2f' % cost)
